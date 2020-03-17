@@ -9,13 +9,13 @@ const TodoPage: React.FC = () => {
   const [todos, setTodos] = useState<ITodo[]>([]);
 
   useEffect(() => {
-    const state = JSON.parse(localStorage.getItem("todos") || "[]") as ITodo[];
-    setTodos(state);
+    // const state = JSON.parse(localStorage.getItem("todos") || "[]") as ITodo[];
+    // setTodos(state);
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(todos));
-    console.log(localStorage);
+    // localStorage.setItem("todos", JSON.stringify(todos));
+    // console.log(localStorage);
   }, [todos]);
 
   const toogleHandler = (id: number) => {
@@ -56,7 +56,7 @@ const TodoPage: React.FC = () => {
     <React.Fragment>
       <ToDoForm onAdd={addHandler} />
       <ToDoList
-        todos={todos}
+        // todos={todos}
         onToogle={toogleHandler}
         onRemove={removeHandler}
       />

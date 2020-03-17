@@ -2,9 +2,12 @@ import React from "react";
 import "../index.css";
 
 import { ITodo } from "../interfaces";
+import { connect } from "react-redux";
+import { startAddTodo } from "../actions/todos";
 
 type ToDoListProps = {
-  todos: ITodo[];
+  // todos: ITodo[];
+  todos: any;
   onToogle(id: number): void;
   onRemove: (id: number) => void;
 };
@@ -21,7 +24,7 @@ const ToDoList: React.FC<ToDoListProps> = ({ todos, onRemove, onToogle }) => {
 
   return (
     <ul>
-      {todos.map(todo => {
+      {todos.map((todo: any) => {
         const classes = ["toDo"];
         if (todo.completed) {
           classes.push("completed");
@@ -51,4 +54,12 @@ const ToDoList: React.FC<ToDoListProps> = ({ todos, onRemove, onToogle }) => {
   );
 };
 
-export default ToDoList;
+const mapStateToProps = (state: any, props: any) => ({
+  todos: state.todos
+});
+
+const mapDispatchToProps = (dispatch: any, props: any) => ({
+  startAddTodo: (title: any) => dispatch(startAddTodo(title))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ToDoList);

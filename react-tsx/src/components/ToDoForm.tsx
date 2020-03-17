@@ -1,8 +1,13 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import "../index.css";
+import { connect } from "react-redux";
+import todos from "../reducers/todos";
+import { startAddTodo } from "../actions/todos";
 
 interface IToDoFormProps {
-  onAdd(title: string): void;
+  // onAdd(title: string): void;
+  startAddTodo(title: any): void;
+  todos: any;
 }
 
 const ToDoForm: React.FC<IToDoFormProps> = props => {
@@ -10,10 +15,26 @@ const ToDoForm: React.FC<IToDoFormProps> = props => {
 
   const keyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
-      props.onAdd(ref.current!.value);
+      console.log(ref.current!.value);
+      props.startAddTodo(ref.current!.value);
       ref.current!.value = "";
     }
   };
+
+  useEffect(() => {
+    // localStorage.setItem("todos", "lala");
+    // localStorage.setItem("todos", "rere");
+    // localStorage.setItem("todos", JSON.stringify(props.todos));
+    // console.log("INIT", localStorage);
+  }, [props.todos]);
+
+  useEffect(() => {
+    // const state = JSON.parse(localStorage.getItem("todos") || "[]");
+    // setTodos(state);
+    // console.log("State", state);
+  }, [props.todos]);
+
+  console.log("REdTo", props.todos);
 
   return (
     <div className="input-field mt2">
@@ -31,5 +52,11 @@ const ToDoForm: React.FC<IToDoFormProps> = props => {
     </div>
   );
 };
+const mapStateToProps = (state: any, props: any) => ({
+  todos: state.todos
+});
 
-export default ToDoForm;
+const mapDispatchToProps = (dispatch: any, props: any) => ({
+  startAddTodo: (title: any) => dispatch(startAddTodo(title))
+});
+export default connect(mapStateToProps, mapDispatchToProps)(ToDoForm);
