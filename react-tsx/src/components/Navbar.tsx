@@ -4,12 +4,12 @@ import { NavLink } from "react-router-dom";
 
 const Navbar: React.FunctionComponent = () => {
   return (
-    <nav>
+    <nav className="nav">
       <div className="nav-wrapper">
-        <a href="/" className="brand-logo">
+        <a href="/" className="brand-logo marg">
           Todo
         </a>
-        <ul id="nav-mobile" className="right hide-on-med-and-down">
+        <ul id="nav-mobile" className="right list">
           <li>
             <NavLink to="/">List</NavLink>
           </li>

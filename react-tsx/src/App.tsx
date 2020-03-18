@@ -11,7 +11,7 @@ const App: React.FC = () => {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <Navbar />
+        <Navbar  />
         <div className="container">
           <Switch>
             <Route component={TodoPage} path="/" exact />

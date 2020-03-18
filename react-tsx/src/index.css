@@ -1,26 +1,29 @@
-/* body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-} */
-
 .mt2 {
   margin-top: 2rem;
 }
-
+.marg {
+  margin-left: 20px;
+}
+.list {
+  margin-right: 20px;
+}
 .toDo {
   margin-bottom: 1rem;
 }
 .toDo.completed .span {
   text-decoration: line-through;
+}
+.span {
+  color: black;
+}
+.nav {
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(75, 213, 157, 1) 0%,
+    rgba(194, 215, 0, 1) 100%,
+    rgba(0, 212, 255, 1) 100%
+  );
 }
 .lable {
   width: 100%;
@@ -29,7 +32,11 @@ code {
   justify-content: space-between;
   cursor: pointer;
   padding: 1rem;
-  background: #f3f3f3;
+  background: linear-gradient(
+    90deg,
+    rgba(234, 255, 0, 1) 0%,
+    rgba(255, 207, 0, 1) 100%
+  );
 }
 .toDo > .label > .i {
   z-index: 2;

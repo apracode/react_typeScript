@@ -1,30 +1,23 @@
 import React from "react";
 import "../index.css";
-
-import { ITodo } from "../interfaces";
 import { connect } from "react-redux";
-import { startAddTodo } from "../actions/todos";
+import { startRemoveTodo, startToogleTodo } from "../actions/todos";
+import { Todo } from "../types/Todo";
+import { AppState } from "../store/store";
+import { ThunkDispatch } from "redux-thunk";
+import { AppActions } from "../types/actions";
+import { bindActionCreators } from "redux";
 
-type ToDoListProps = {
-  // todos: ITodo[];
-  todos: any;
-  onToogle(id: number): void;
-  onRemove: (id: number) => void;
-};
+type Props = LinkStateProps & LinkDispatchProps;
 
-const ToDoList: React.FC<ToDoListProps> = ({ todos, onRemove, onToogle }) => {
-  if (todos.length === 0) {
+const ToDoList: React.FC<Props> = props => {
+  if (props.todos.length === 0) {
     return <p className="center">You have nothing to do</p>;
   }
 
-  const removeHandler = (e: React.MouseEvent, id: number) => {
-    e.preventDefault();
-    onRemove(id);
-  };
-
   return (
     <ul>
-      {todos.map((todo: any) => {
+      {props.todos.map((todo: Todo) => {
         const classes = ["toDo"];
         if (todo.completed) {
           classes.push("completed");
@@ -37,12 +30,12 @@ const ToDoList: React.FC<ToDoListProps> = ({ todos, onRemove, onToogle }) => {
                 type="checkbox"
                 id={`${todo.id}`}
                 checked={todo.completed}
-                onChange={onToogle.bind(null, todo.id)}
+                onChange={props.startToogleTodo.bind(null, todo.id)}
               />
               <span className="span">{todo.title}</span>
               <i
                 className="material-icons red-text i"
-                onClick={event => removeHandler(event, todo.id)}
+                onClick={() => props.startRemoveTodo(todo.id)}
               >
                 delete
               </i>
@@ -53,13 +46,23 @@ const ToDoList: React.FC<ToDoListProps> = ({ todos, onRemove, onToogle }) => {
     </ul>
   );
 };
+interface LinkStateProps {
+  todos: Todo[];
+}
+interface LinkDispatchProps {
+  startToogleTodo: (id: number) => void;
+  startRemoveTodo: (id: number) => void;
+}
 
-const mapStateToProps = (state: any, props: any) => ({
+const mapStateToProps = (state: AppState): LinkStateProps => ({
   todos: state.todos
 });
 
-const mapDispatchToProps = (dispatch: any, props: any) => ({
-  startAddTodo: (title: any) => dispatch(startAddTodo(title))
+const mapDispatchToProps = (
+  dispatch: ThunkDispatch<any, any, AppActions>
+): LinkDispatchProps => ({
+  startRemoveTodo: bindActionCreators(startRemoveTodo, dispatch),
+  startToogleTodo: bindActionCreators(startToogleTodo, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ToDoList);
